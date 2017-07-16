@@ -1,8 +1,7 @@
 <?php
 
-namespace Farzin;
+namespace Farzin\BtnFormBuilder;
 
-use Farzin\BtnForm\ButtonFormBuilder;
 use Illuminate\Support\Facades\Facade;
 
 class BtnForm extends Facade

@@ -1,6 +1,6 @@
 <?php
 
-namespace Farzin\BtnForm;
+namespace Farzin\BtnFormBuilder;
 
 class ButtonFormBuilder
 {
