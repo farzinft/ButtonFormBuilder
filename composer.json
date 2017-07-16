@@ -1,0 +1,16 @@
+{
+    "name": "farzin/laravel-btnform",
+    "description": "create button post/delete forms",
+    "authors": [
+        {
+            "name": "farzin fthi",
+            "email": "farzin.fthi@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Farzin\\BtnFormBuilder\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
