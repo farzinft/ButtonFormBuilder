@@ -10,21 +10,14 @@ class ButtonFormBuilder
     protected $fa;
     protected $action;
 
-    public function post(array $data)
-    {
-        $this->setData($data);
-        return $this->generateButtonForm('post', $this->action, $this->inputAttr, $this->fa, $this->text);
-    }
 
-    public function delete(array $data)
+    protected function generateButtonForm($method, $action = '', $attr = '', $fa = '', $text = '', $putMethod = false)
     {
-        $this->setData($data);
-        return $this->generateButtonForm('delete', $this->action, $this->inputAttr, $this->fa, $this->text);
-    }
-
-    protected function generateButtonForm($method, $action, $attr, $fa, $text)
-    {
-        $form = '<form class="btn-form" action="' . $action . '" method="' . $method . '">' . csrf_field();
+        $methodField = '';
+        if ($putMethod) {
+            $methodField = method_field('put');
+        }
+        $form = '<form class="btn-form" action="' . $action . '" method="' . $method . '">' . csrf_field() . $methodField;
         $fa = '<i class="fa fa-' . $fa . '" aria-hidden="true"></i>';
         $form .= '<button ' . $attr . '>' . $fa . $text . '</button></form>';
         return $form;
@@ -44,6 +37,22 @@ class ButtonFormBuilder
         if (isset($data['text'])) $this->text = $data['text'];
         if (isset($data['fa'])) $this->fa = $data['fa'];
         if (isset($data['action'])) $this->action = $data['action'];
+    }
+
+    public function __call($name, $arguments)
+    {
+        $this->setData(...$arguments);
+
+        switch ($name) {
+            case 'post' :
+                return $this->generateButtonForm('post', $this->action, $this->inputAttr, $this->fa, $this->text);
+            case 'get' :
+                return '<a href="' . $this->action . '" ' . $this->inputAttr . '><i class="fa fa-' . $this->fa . '" aria-hidden="true"></i>' . $this->text . '</a>';
+            case 'delete' :
+                return $this->generateButtonForm('delete', $this->action, $this->inputAttr, $this->fa, $this->text);
+            case 'put' :
+                return $this->generateButtonForm('post', $this->action, $this->inputAttr, $this->fa, $this->text, true);
+        }
     }
 
 
