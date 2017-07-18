@@ -11,11 +11,13 @@ class ButtonFormBuilder
     protected $action;
 
 
-    protected function generateButtonForm($method, $action = '', $attr = '', $fa = '', $text = '', $putMethod = false)
+    protected function generateButtonForm($method, $action = '', $attr = '', $fa = '', $text = '', $putMethod = false, $deleteMethod = false)
     {
         $methodField = '';
         if ($putMethod) {
             $methodField = method_field('put');
+        }elseif ($deleteMethod) {
+            $methodField = method_field('delete');
         }
         $form = '<form class="btn-form" action="' . $action . '" method="' . $method . '">' . csrf_field() . $methodField;
         $fa = '<i class="fa fa-' . $fa . '" aria-hidden="true"></i>';
@@ -49,7 +51,7 @@ class ButtonFormBuilder
             case 'get' :
                 return '<a href="' . $this->action . '" ' . $this->inputAttr . '><i class="fa fa-' . $this->fa . '" aria-hidden="true"></i>' . $this->text . '</a>';
             case 'delete' :
-                return $this->generateButtonForm('delete', $this->action, $this->inputAttr, $this->fa, $this->text);
+                return $this->generateButtonForm('post', $this->action, $this->inputAttr, $this->fa, $this->text, false, true);
             case 'put' :
                 return $this->generateButtonForm('post', $this->action, $this->inputAttr, $this->fa, $this->text, true);
         }
